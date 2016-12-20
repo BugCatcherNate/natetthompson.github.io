@@ -10,6 +10,12 @@
 
 }
 
+#options{
+
+
+
+color: inherit;
+}
 #name{
 
 	font-family: "Times New Roman", Times, serif;
@@ -24,4 +30,17 @@
 	left: 5%;
 	
 
+}
+
+button{
+
+	background-color: Transparent;
+
+    border: none;
+   
+    outline:none;
+}
+
+button:hover{
+	color: white;
 }
