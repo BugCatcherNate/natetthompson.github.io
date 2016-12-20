@@ -3,10 +3,10 @@
 	
 	background-color: grey; 
 	padding: 20px;
-	border-style: solid;
-	position: absolute;
-
 	
+	position: relative;
+
+
 
 }
 
@@ -15,4 +15,13 @@
 	font-family: "Times New Roman", Times, serif;
 
 	color: black;
+}
+
+#about{
+
+	position: relative;
+	width: 90%;
+	left: 5%;
+	
+
 }
