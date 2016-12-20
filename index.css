@@ -1,0 +1,18 @@
+#banner{
+
+	
+	background-color: grey; 
+	padding: 20px;
+	border-style: solid;
+	position: absolute;
+
+	
+
+}
+
+#name{
+
+	font-family: "Times New Roman", Times, serif;
+
+	color: black;
+}
