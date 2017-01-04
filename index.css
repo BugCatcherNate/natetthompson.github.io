@@ -30,10 +30,18 @@ color: inherit;
 #about{
 
 	position: relative;
-	width: 90%;
+	width: 70%;
 	left: 5%;
 	
 
+}
+
+#resume{
+
+	position: relative;
+	width: 90%;
+	left: 20%;
+	
 }
 p{
 	width: 75%;
