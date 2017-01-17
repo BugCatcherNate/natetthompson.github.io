@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+
+
+<head>
+<link href="index.css" rel="stylesheet" type = "text/css" />
+
+<div id="banner">
+<h2  id= "name"> Nathan Thompson </h2>
+<div id="options">
+
+<button onclick="location.href='blog.html'" type="button">
+     Blog</button>
+<button id="python"> Projects </button>
+<button id="gamedev"> Game Develpment </button>
+<button onclick="location.href='https://github.com/natetthompson'" type="button">
+     GitHub</button>
+<button onclick="location.href='resume.html'" type="button">
+     CV/Resume</button>
+<button onclick="location.href='index.html'" type="button">
+     About</button>
+</div>
+
+</div> 
+</head>
+
+
+<body>
+
+<h1 id="maintitle"> Entries </h1>
+<div id="entries">
+
+<h1 id="etitle"> Linux AES256 Directory Encryption </h1>
+<h1 id="dates">  January 17, 2017 </h1>
+	
+	
+	<p>
+	Recently I have been experimenting with encrypting files using gpg in Linux. Gpg provides the ability for users to encrypt a file using various encryption algorithms. Currently gpg supports [ IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH, CAMELLIA128, CAMELLIA192, CAMELLIA256] as well as a handful of hashing algorithms [MD5, SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224].  
+	</p>
+	<img src="gnupg.png" ALIGN="left" HSPACE="25" vspace="10" style="width: 250px; height: 103px;">
+	<p>
+	Personally, I prefer using AES256 as it is an algorithm used by the U.S. government and its constituent 3 letter organizations. As far as security, it would require millions of years of processing by a top tier super computer in order to break the encryption by means of a brute force attack. Just keep in mind that different encryption algorithms are useful in different scenarios and there is not one algorithm to rule them all.
+	</p>
+
+	<p>
+	 The functionality of this tool lends it self great for encrypting single files and is one of the best open source encryption tools available. However, at times I found the commands to be verbose. This is not an unusual occurrence to those accustomed to operating from the terminal. As an example the following command encrypts a file with AES356.  
+	</p>
+	<div id='codes'>
+	<pre>
+	<code>
+me@me:~$ gpg --symmetric --cipher-algo AES256 filetoencrypt.txt
+	</code>
+	</pre>
+	</div>
+
+	
+	<p>
+	These added options are fine if you need to be specific with the type of encryption algorithm you wish to use. However, this becomes tedious when you are continually encrypting files. I do know that you can change the default algorithm used by gpg in the .config files. Again this is fine, but I wished to implement my own procedure that would allow new linux users to utilize gpg encryption. 
+	</p>
+	<p>
+	I also found my self wanting to encrypt entire directories more often than individual files. I realized this could be achieved by compressing and archiving a directory using ‘tar’. The compressed directory could then be encrypted using gpg. This method worked perfectly but required a handful of commands to accomplish. I then decided to write a shell script to run all the necessary commands to encrypt a directory. The following shell script is what I ended up with. 
+	</p>
+	<div id='codes'>
+	<pre>
+	<code>
+#!/bin/bash
+
+#Title: fencrypt
+#Author: Nathan Thompson
+#Date: Jan 17/17
+
+if [[ $1 = "-e" ]]; then
+	
+	#first uses tar to archive and zip the folder
+	tar -czf "$2.tar.gz" "$2" 
+
+	#gpg is used to encrypt the archive
+	gpg -o "encrypted.$2" --symmetric --cipher-algo AES256 "$2.tar.gz"
+	
+	#the temporary compressed folder is then removed
+	rm "$2.tar.gz"
+
+	echo -n "Delete original unencrypted file of $2?(y/N) > "
+	read answer
+	if [ "$answer" == "y" ]; then
+		
+		rm -r $2
+		echo "Unencrypted original of $2 removed."
+	fi
+
+	if [ $? -eq 0 ]; then
+		echo "Successfully encrypted $2 as encrypted.$2!"
+	else
+		echo "Failed to encrypt $2"
+	fi
+
+elif [[ $1 = "-d" ]]; then
+
+	#gpg first decrypts the file	
+	gpg -o "decrypted$2" -d "$2"
+
+	#next tar decompresses the folder	
+	tar -xzf "decrypted$2"
+
+	#next the temporary compressed tar file is removed
+	rm "decrypted$2"
+	
+	if [ $? -eq 0 ]; then
+		echo "Successfully decrypted $2"
+		echo -n "Remove encrypted original of $2?(y/N) > "
+		read answer
+		if [ "$answer" == "y" ]; then
+		
+			rm $2
+			echo "Encrypted original of $2 removed."
+		fi
+	else
+		echo "Failed to decrypt $2"
+	fi
+
+elif [[ $1 = "-h" ]]; then
+
+	echo "This shell script encrypts or decrypts a specified directory/folder using AES256"
+	echo "-------------------------------------"
+	echo "Options:"
+	echo "	-e: Encrypts specified file"
+	echo "	-d: Decrypts specified file"
+	echo "-------------------------------------"
+	echo "Example of encryption:"
+	echo "	bash fencrypt -e mydirectory" 
+	echo "Example of decryption:"
+	echo "	bash fencrypt -d myencrypteddirectory"
+	echo "-------------------------------------"
+	echo "Author: Nathan Thompson"
+
+	
+else
+	echo "Error: invalid option. Try -h for instructions."
+
+fi
+	
+	</code>
+	</pre>
+	</div>
+	<p>
+	This script also asks the user if they would like to delete the original file thats being encrypted or decrypted. This is handy if the user intends to hide the desired folder on their own local machine. The script also immediately deletes temporary files created during the compression and decompression steps. This ensures there is no unencrypted archives of the file within the local machine.
+	</p>
+	<p>
+	The script comes with two options that can be declared when calling the script. These  options are listed as -e and -d. Using -e a directory can be encrypted such as what is shown in the following command.
+	</p>
+	<div id='codes'>
+	<pre>
+	<code>
+me@me:~$ bash fencrypt -e mydirectory
+	</code>
+	</pre>
+	</div>
+	<p>
+	Where mydirectory is the directory you wish to encrypt. Next, the -d option can be used to decrypt a directory. The following command is an example of decryption. 
+	</p>
+	<div id='codes'>
+	<pre>
+	<code>
+me@me:~$ bash fencrypt -d myencrypteddirectory
+	</code>
+	</pre>
+	</div>
+	<p>
+	Where myencrypteddirectory is the directory to be decrypted. There are still many options to be added to this script such as specifying whether a target is a directory or file. Another flaw to be corrected in this script is that any input directory specified as mydirectory/ instead of mydirectory will cause an error. 
+	</p>
+	<p>
+	In conclusion, I plan to continue tinkering with gpg and improving the script file. If you are interesting in changing anything you can find the script on my Github page. There is no better time than now to learn about encryption in light of all the recent revelations concerning the NSA and the new powers recently granted to them and other agencies by the Obama administration.
+	</p>
+
+
+
+</div>
+
+
+
+</body>
+
+</html>

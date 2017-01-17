@@ -35,7 +35,23 @@ color: inherit;
 	
 
 }
+#entries{
 
+	position: relative;
+	width: 60%;
+	left: 5%;
+}
+#dates{
+
+	position: relative;
+	font-family: "Times New Roman", Times, serif;
+	font-style: italic;
+	
+	color: black;
+	font-size: 18px;
+
+
+}
 #resume{
 
 	position: relative;
@@ -43,13 +59,48 @@ color: inherit;
 	left: 20%;
 	
 }
+
+#maintitle{
+	position: relative;
+
+	font-family: "Times New Roman", Times, serif;
+
+	color: black;
+
+	font-size: 32px;
+}
+
+#etitle{
+	position: relative;
+	
+	font-family: "Times New Roman", Times, serif;
+
+	color: black;
+
+	font-size: 28px;
+
+}
+
+#codes{
+	background-color: #D3D3D3;
+	position: relative;
+	width: 75%;
+	overflow-y: auto;
+	overflow-x: auto;
+	height: 10%;
+	text-align: left;
+	padding: 20px;
+}
+
 p{
 	width: 75%;
 	text-align: block;
 	text-indent: 50px;
 	position: relative;
+	line-height: 2.5em;
 
 }
+
 
 button{
 
