@@ -4,6 +4,7 @@
 
 
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <link href="index.css" rel="stylesheet" type = "text/css" />
 
 <div id="banner">
@@ -33,8 +34,12 @@
 <br>
 <div id="entries">
 
-<h1 id="etitle"> Pygame Animator </h1>
-<h1 id="dates">  January 20, 2017 </h1>
+<div class ="expand-one">
+<h1 id="snip" class="col" style="float: left"> > </h1>
+<h1 id="etitle" style="float: center"> Pygame Animator </h1>
+<h1 id="dates" style="float: center">  January 20, 2017 </h1>
+</div>
+<div class="content-one" id = "content">
 	
 	
 	<p>
@@ -92,10 +97,10 @@ class animator:
 	<p>
 	The beauty of this class is that it can be used for any object that requires animation as long as it is being loaded from a sprite sheet. This includes everything from swaying flowers and trees to complex character attack movements. If you have anything to add to the code you can find it on my github <a href="https://github.com/natetthompson/pygameanimator">here</a>.
 	</p>
-
+</div>
 	
 
-	
+
 
 
 
@@ -104,5 +109,25 @@ class animator:
 
 
 </body>
+<script> var check = false; </script>
+
+
+<script>
+
+$('.expand-one').click(function(){
+    $('.content-one').slideToggle('slow');
+ 
+    $().toggle(check);
+    if ( check == false){
+
+    $('.col').replaceWith("<h1 id='snip' class='col' style='float: left'> ^ </h1>");
+    check = true;
+}else{
+    
+    $('.col').replaceWith("<h1 id='snip' class='col' style='float: left'> > </h1>");
+    check = false;
+}
+});
+</script>
 
 </html>

@@ -4,6 +4,7 @@
 
 
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <link href="index.css" rel="stylesheet" type = "text/css" />
 
 <div id="banner">
@@ -33,8 +34,12 @@
 <br>
 <div id="entries">
 
-<h1 id="etitle"> Linux AES256 Directory Encryption </h1>
-<h1 id="dates">  January 17, 2017 </h1>
+<div class ="expand-one">
+<h1 id="snip" class="col" style="float: left">></h1>
+<h1 id="etitle" style="float: center"> Linux AES256 Directory Encryption </h1>
+<h1 id="dates" style="float: center"> January 17, 2017 </h1>
+</div>
+<div class="content-one">
 	
 	
 	<p>
@@ -181,11 +186,32 @@ me@me:~$ bash fencrypt -d myencrypteddirectory
 
 
 
+</div>
 
 </div>
 
 
 
 </body>
+<script> var check = false </script>
+<script>
+
+$('.expand-one').click(function(){
+    $('.content-one').slideToggle('slow');
+ 
+    $().toggle(check);
+    if ( check == false){
+
+    $('.col').replaceWith("<h1 id='snip' class='col' style='float: left'>^</h1>");
+    check = true;
+}else{
+    
+    $('.col').replaceWith("<h1 id='snip' class='col' style='float: left'>></h1>");
+    check = false;
+}
+});
+</script>
+
+
 
 </html>

@@ -10,12 +10,16 @@
 
 }
 
+
 #options{
 position: relative;
 
 left: 20px;
 
 color: inherit;
+}
+#content{
+	left:10%;
 }
 
 #name{
@@ -39,10 +43,10 @@ color: inherit;
 #entries{
 
 	position: absolute;
-
+	left: 5%;
 	
 	width: 50%;
-	left: 5%;
+
 }
 
 #dates{
@@ -50,12 +54,15 @@ color: inherit;
 	position: relative;
 	font-family: "Times New Roman", Times, serif;
 	font-style: italic;
+	left: 5%;
 	
 	color: black;
 	font-size: 28px;
 
 
 }
+
+
 #resume{
 
 	position: relative;
@@ -82,6 +89,7 @@ color: inherit;
 	color: black;
 
 	font-size: 36px;
+	left: 5%;
 
 }
 
